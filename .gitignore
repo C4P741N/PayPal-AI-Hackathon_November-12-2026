@@ -1,0 +1,42 @@
+# Rust build artifacts
+/target/
+/debug/
+/release/
+
+# Cargo
+Cargo.lock
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Rust Analyzer
+.rust-analyzer/
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
+# Coverage and profiling
+/tarpaulin-report.html
+/coverage/
+*.profraw
+*.profdata
