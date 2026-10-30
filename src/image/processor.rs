@@ -126,6 +126,23 @@ If the image is not a receipt, return:
   "error": "INVALID_RECEIPT",
   "message": "The supplied image is not a valid receipt."
 }
+
+
+CONTACT VALIDATION RULES:
+- Before processing purchase allocations, check whether the user provided
+  at least one valid contact/person to whom an item was purchased.
+- If the user provides no allocation instructions or does not mention
+  any identifiable person other than themselves, do not process the receipt.
+- In that case, return ONLY the following JSON:
+
+{
+  "error": "INVALID_CONTACT",
+  "message": "There were no valid contacts provided."
+}
+- Do not extract or return receipt information when this condition is met.
+- If at least one valid contact is provided, proceed with receipt extraction
+  and allocation.
+- Items not explicitly assigned to a named contact must be assigned to "self".
 "#;
 
     spinner.set_style(

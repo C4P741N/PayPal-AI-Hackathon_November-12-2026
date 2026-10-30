@@ -1,7 +1,7 @@
 mod image;
 
 use image::processor::image_to_text;
-use std::{env, eprint, print};
+use std::env;
 
 #[tokio::main]
 async fn main() {
@@ -12,6 +12,7 @@ async fn main() {
     let mime_type = "image/png";
 
     let user_prompt = "i paid for johns shampoo and for janes conditioner";
+    //let user_prompt = "what is the meaning of life";
 
     match image_to_text(mime_type, incoming_base64, &api_key, user_prompt).await {
         Ok(text) => print!("Exracted text: {}", text),
