@@ -38,13 +38,55 @@ struct ChatRequest {
     max_tokens: u32,
 }
 
+
 pub async fn image_to_text(
     mime_type: &str,
     base64_image: &str,
     api_key: &str,
-    prompt: &str,
 ) -> Result<String, Box<dyn std::error::Error>> {
     let spinner = ProgressBar::new_spinner();
+
+    let prompt = r#"
+Extract all available information from this image.
+Return ONLY valid JSON (no Markdown code fences or additional commentary) using the following structure:
+
+{
+  "items": [
+    {
+      "quantity": 2,
+      "description": "Laptop Charger",
+      "unit_price": 1500.00,
+      "total_price": 3000.00,
+      "tax_type": "T"
+    },
+  ],
+  "store_name": "The Clurb"
+  "subtotal": 4900.00,
+  "tax": 784.00,
+  "total": 5684.00,
+  "payment": {
+    "method": "VISA",
+    "card_number": "XXXXXXXXXXXX4242",
+    "transaction_type": "CARD PRESENT",
+    "tendered": 5684.00,
+    "change": 0.00
+  },
+  "metadata": {
+    "date": "10/30/2026",
+    "time": "01:30 PM",
+    "transaction_number": "72987869213046141"
+  }
+}
+
+Rules:
+- Extract the actual values from the image; do not use the sample values.
+- Include all line items visible in the receipt.
+- Use numeric values for quantities and monetary amounts.
+- Preserve tax_type as shown on the receipt.
+- Use null for missing or unreadable values.
+- Do not invent information.
+- Return only the JSON object.
+"#;
     spinner.set_style(
         ProgressStyle::default_spinner()
             .tick_strings(&["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"])
