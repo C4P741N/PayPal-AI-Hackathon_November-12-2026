@@ -38,7 +38,7 @@ struct ChatRequest {
     max_tokens: u32,
 }
 
-async fn image_to_text(
+pub async fn image_to_text(
     mime_type: &str,
     base64_image: &str,
     api_key: &str,
